@@ -3,10 +3,12 @@ package co.com.bancolombia.usecase.createbox;
 import co.com.bancolombia.model.box.Box;
 import co.com.bancolombia.model.box.BoxStatus;
 import co.com.bancolombia.model.box.gateways.BoxRepository;
+import co.com.bancolombia.model.events.BoxCreatedEvent;
 import co.com.bancolombia.model.events.gateways.EventsGateway;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 public class CreateBoxUseCase {
     private final BoxRepository boxRepository;
@@ -26,7 +28,10 @@ public class CreateBoxUseCase {
                                 .status(BoxStatus.CLOSED)
                                 .currentBalance(BigDecimal.ZERO)
                                 .build())
-                                .flatMap(box -> eventsGateway.emit(box).thenReturn(box))
+                                .flatMap(box -> eventsGateway
+                                        .emit(new BoxCreatedEvent(id, "", Instant.now()))
+                                        .thenReturn(box)
+                                )
                 );
     }
 }

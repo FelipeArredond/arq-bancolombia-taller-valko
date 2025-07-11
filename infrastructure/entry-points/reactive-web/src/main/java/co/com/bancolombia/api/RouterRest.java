@@ -14,6 +14,10 @@ public class RouterRest {
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return route(PUT("/api/close"), handler::close)
                 .andRoute(PUT("/api/open"), handler::open)
-                .and(route(POST("/api"), handler::createBox));
+                .and(route(POST("/api"), handler::createBox))
+                .and(route(GET("/api"), handler::listAllBoxes))
+                .and(route(PATCH("/api/{id}"), handler::updateBoxName))
+                .andRoute(DELETE("/api/{id}"), handler::deleteBox)
+                .and(route(GET("/api/{id}"), handler::getBoxById));
     }
 }
