@@ -4,6 +4,7 @@ import co.com.bancolombia.model.box.Box;
 import co.com.bancolombia.model.box.BoxStatus;
 import co.com.bancolombia.model.box.gateways.BoxRepository;
 import co.com.bancolombia.model.events.BoxReopenedEvent;
+import co.com.bancolombia.model.events.EventTypeEnum;
 import co.com.bancolombia.model.events.gateways.EventsGateway;
 import reactor.core.publisher.Mono;
 
@@ -27,7 +28,7 @@ public class ReopenboxUseCase {
                         BoxReopenedEvent event = new BoxReopenedEvent(savedBox.getId(), "", Instant.now());
                         event.setStatusOld(statusOld);
                         event.setStatusNew(BoxStatus.OPENED);
-                        return eventsGateway.emit(event).thenReturn(savedBox);
+                        return eventsGateway.emit(event, EventTypeEnum.BOX_REOPENED_EVENT).thenReturn(savedBox);
                     });
                 });
     }

@@ -29,6 +29,20 @@ public class Box {
         this.currentBalance = builder.currentBalance;
     }
 
+    @Override
+    public String toString() {
+        return "Box{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", openingAmount=" + openingAmount +
+                ", closingAmount=" + closingAmount +
+                ", openedAt=" + openedAt +
+                ", closedAt=" + closedAt +
+                ", currentBalance=" + currentBalance +
+                '}';
+    }
+
     public String getId() {
         return id;
     }

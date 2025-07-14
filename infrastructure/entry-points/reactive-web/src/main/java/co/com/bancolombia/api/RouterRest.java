@@ -11,13 +11,19 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class RouterRest {
     @Bean
-    public RouterFunction<ServerResponse> routerFunction(Handler handler) {
+    public RouterFunction<ServerResponse> boxRouter(Handler handler) {
         return route(PUT("/api/close"), handler::close)
                 .andRoute(PUT("/api/open"), handler::open)
                 .and(route(POST("/api"), handler::createBox))
                 .and(route(GET("/api"), handler::listAllBoxes))
                 .and(route(PATCH("/api/{id}"), handler::updateBoxName))
-                .andRoute(DELETE("/api/{id}"), handler::deleteBox)
+                .and(route(DELETE("/api/{id}"), handler::deleteBox))
                 .and(route(GET("/api/{id}"), handler::getBoxById));
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> movementRouter(MovementHandler handler) {
+        return route(POST("/api/boxes/{id}/movements/upload"), handler::uploadMovement);
+    }
+
 }

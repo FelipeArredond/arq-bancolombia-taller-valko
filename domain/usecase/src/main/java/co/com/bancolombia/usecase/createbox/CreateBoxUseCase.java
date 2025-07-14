@@ -4,6 +4,7 @@ import co.com.bancolombia.model.box.Box;
 import co.com.bancolombia.model.box.BoxStatus;
 import co.com.bancolombia.model.box.gateways.BoxRepository;
 import co.com.bancolombia.model.events.BoxCreatedEvent;
+import co.com.bancolombia.model.events.EventTypeEnum;
 import co.com.bancolombia.model.events.gateways.EventsGateway;
 import reactor.core.publisher.Mono;
 
@@ -29,7 +30,8 @@ public class CreateBoxUseCase {
                                 .currentBalance(BigDecimal.ZERO)
                                 .build())
                                 .flatMap(box -> eventsGateway
-                                        .emit(new BoxCreatedEvent(id, "", Instant.now()))
+                                        .emit(new BoxCreatedEvent(id, "", Instant.now()),
+                                                EventTypeEnum.BOX_CREATED_EVENT)
                                         .thenReturn(box)
                                 )
                 );

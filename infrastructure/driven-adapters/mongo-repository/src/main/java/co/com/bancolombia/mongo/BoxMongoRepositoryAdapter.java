@@ -9,11 +9,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class MongoRepositoryAdapter extends AdapterOperations<Box, BoxData, String, MongoDBRepository>
+public class BoxMongoRepositoryAdapter extends AdapterOperations<Box, BoxData, String, BoxMongoDBRepository>
  implements BoxRepository
 {
 
-    public MongoRepositoryAdapter(MongoDBRepository repository, ObjectMapper mapper) {
+    public BoxMongoRepositoryAdapter(BoxMongoDBRepository repository, ObjectMapper mapper) {
         super(repository, mapper, d -> mapper.map(d, Box.class));
     }
 

@@ -3,6 +3,7 @@ package co.com.bancolombia.usecase.updateboxname;
 import co.com.bancolombia.model.box.Box;
 import co.com.bancolombia.model.box.gateways.BoxRepository;
 import co.com.bancolombia.model.events.BoxNameUpdatedEvent;
+import co.com.bancolombia.model.events.EventTypeEnum;
 import co.com.bancolombia.model.events.gateways.EventsGateway;
 import reactor.core.publisher.Mono;
 
@@ -28,7 +29,7 @@ public class UpdateboxnameUseCase {
                         BoxNameUpdatedEvent event = new BoxNameUpdatedEvent(savedBox.getId(), "", Instant.now());
                         event.setNameOld(nameOld);
                         event.setNameNew(savedBox.getName());
-                        return eventsGateway.emit(event).thenReturn(savedBox);
+                        return eventsGateway.emit(event, EventTypeEnum.BOX_NAME_UPDATED_EVENT).thenReturn(savedBox);
                     });
                 });
     }

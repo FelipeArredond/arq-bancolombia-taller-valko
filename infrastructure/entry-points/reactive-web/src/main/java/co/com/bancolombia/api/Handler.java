@@ -1,6 +1,8 @@
 package co.com.bancolombia.api;
 
 import co.com.bancolombia.model.box.Box;
+import co.com.bancolombia.model.movement.Movement;
+import co.com.bancolombia.model.movement.MovementType;
 import co.com.bancolombia.usecase.closebox.CloseBoxUseCase;
 import co.com.bancolombia.usecase.createbox.CreateBoxUseCase;
 import co.com.bancolombia.usecase.deletebox.DeleteboxUseCase;
@@ -8,14 +10,24 @@ import co.com.bancolombia.usecase.getboxbyid.GetboxbyidUseCase;
 import co.com.bancolombia.usecase.listallboxes.ListallboxesUseCase;
 import co.com.bancolombia.usecase.openbox.OpenBoxUseCase;
 import co.com.bancolombia.usecase.updateboxname.UpdateboxnameUseCase;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.UUID;
 
 @Component
 public class Handler {
